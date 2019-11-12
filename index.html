@@ -13,13 +13,12 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <h1>Password Generator</h1>
+          <h2>Password Generator</h2>
         </div>
       </div>
       
       <div class="row">
         <div class="col-12">
-          <h2>Generate a Password</h2>
         
           Uppercase Characters: <input type="checkbox" id="UppercaseCheck"><br>
           Lowercase Characters: <input type="checkbox" id="LowercaseCheck"><br>
@@ -88,6 +87,13 @@
 
         password = generatePassword(length, UC, LC, NC, SC);
 
+        // check to make sure there is at least one character from each requested group in 
+        // the generated password, if not, generate another password and recheck
+        while(!(checkCharactersExist(password, UC, LC, NC, SC))) {
+          password = generatePassword(length, UC, LC, NC, SC);
+        }
+
+
         // update the password field on the page
         document.getElementById('passwordField').value = password;
     }
@@ -102,7 +108,7 @@
         // check if desired length is in range, if not, prompt again
         while(int < 8 || int > 128)
         {
-            alert("Must be between 8 and 128")
+            alert("Must be between 8 and 128");
             length = prompt("How many characters do you want? (8-128)");
             int = parseInt(length);
         }
@@ -192,6 +198,58 @@
 
       /* Alert the copied text */
       // alert("Copied the text: " + copyText.value);
+    }
+
+    // Check if each category of character that is requested (represented by boolean value true)
+    // is included in the password.  Return true if all characters included, otherwise false
+    function checkCharactersExist(password, UC, LC, NC, SC) {
+      
+      var upperletterarray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+      var lowerletterarray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      var numericarray =['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      var unicodearray = ['\u0021', '\u0022', '\u0023', '\u0024', '\u0025', '\u0026', '\u0027','\u0028', '\u0029', '\u002A', '\u002B', '\u002C', '\u002D', '\u002E', '\u002F', '\u003A', '\u003B', '\u003C', '\u003D', '\u003E', '\u003F', '\u0040', '\u005B', '\u005C', '\u005D', '\u005E', '\u005F', '\u0060', '\u007B', '\u007C', '\u007D', '\u007E'];
+
+      var r1, r2, r3, r4, result;
+      r1 = true;
+      r2 = true;
+      r3 = true;
+      r4 = true;
+
+      // If UC is true, there must be at least one uppercase character
+      if(UC) {
+        r1 = checkPasswordAgainstArray(password, upperletterarray);
+      }
+
+      if(LC) {
+        r2 = checkPasswordAgainstArray(password, lowerletterarray);
+      }
+
+      if(NC) {
+        r3 = checkPasswordAgainstArray(password, numericarray);
+      }
+
+      if(SC) {
+        r4 = checkPasswordAgainstArray(password, unicodearray);
+      }
+
+      result = (r1 && r2 && r3 && r4);
+
+      console.log("result = " + result)
+      return result;
+
+    }
+
+    // pass in a string password and an array characterarray
+    // return true if password has any characters from characterarray, false otherwise
+    function checkPasswordAgainstArray(password, characterarray) {
+      for(var i = 0; i < password.length; i++) {
+        for(var j = 0; j < characterarray.length; j++) {
+          if(password[i] == characterarray[j])
+            return true;
+        }
+      }
+
+      return false;
     }
     
 
