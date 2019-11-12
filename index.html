@@ -4,33 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Password Generator</title>
   </head>
 
   <body>
-    <header>
-      <h1>Password Generator</h1>
-    </header>
-    <h2>Generate a Password</h2>
-    
-    Uppercase Characters: <input type="checkbox" id="UppercaseCheck"><br>
-    Lowercase Characters: <input type="checkbox" id="LowercaseCheck"><br>
-    Numeric Characters: <input type="checkbox" id="NumericCheck"><br>
-    Special Characters: <input type="checkbox" id="SpecialCheck"><br>
-    
-    <textarea
-      readonly
-      id="passwordField"
-      placeholder="Your Secure Password"
-      aria-label="Generated Password"
-      rows="5"
-      cols="32"
-    ></textarea>
-    <br>
-    <button id="generate" onclick="masterFunction()">Generate Password</button>
-    <button id="copy" onclick="copyPasswordtoClipboard()">
-      Copy to Clipboard
-    </button>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1>Password Generator</h1>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12">
+          <h2>Generate a Password</h2>
+        
+          Uppercase Characters: <input type="checkbox" id="UppercaseCheck"><br>
+          Lowercase Characters: <input type="checkbox" id="LowercaseCheck"><br>
+          Numeric Characters: <input type="checkbox" id="NumericCheck"><br>
+          Special Characters: <input type="checkbox" id="SpecialCheck"><br><br>
+          Desired Password Length (8-128 characters):<br><input type="text" id="passwordLength" value="8">
+          <br>
+          <br>
+          <strong>Generated Password:</strong><br>
+          <textarea
+            readonly
+            id="passwordField"
+            placeholder="Your Secure Password"
+            aria-label="Generated Password"
+            rows="5"
+            cols="32"
+          ></textarea>
+          <br>
+
+          <br>
+          <button class="btn btn-primary" id="generate" onclick="masterFunction()">Generate Password</button>
+          <button class="btn btn-secondary" id="copy" onclick="copyPasswordtoClipboard()">
+            Copy to Clipboard
+          </button>
+        </div>
+      </div>
+    </div> 
+
 
     <script>
     
@@ -48,7 +65,7 @@
         var NC = includeNC.checked;
         var SC = includeSC.checked;
 
-        alert(UC + " " + LC + " " + NC + " " + SC);
+        // alert(UC + " " + LC + " " + NC + " " + SC);
 
         //check to insure that at least one checkbox is selected, if not, exits the function
         if(!(UC || LC || NC || SC)){
@@ -60,7 +77,14 @@
         // alert("Include Lowercase: " + LC)
         // alert("Include Numeric: " + NC)
         // alert("Include Special: " + SC)
-        length = getLength();
+        length = getLengthfromText();
+
+        //check if length is valid, if not return
+        if(!(length >= 8 && length <= 128)) {
+          alert("Desired length must be between 8 and 128 characters");
+          return;
+        }
+
 
         password = generatePassword(length, UC, LC, NC, SC);
 
@@ -72,8 +96,8 @@
     // Currently using a prompt, long term want to get this from a text field on the page
     function getLength() {
         console.log("Entering getLength function");
-        var length = prompt("How many characters do you want? (8-128)");
-        var int = parseInt(length);
+        var length = prompt("How many characters do you want? (8-128)"); 
+        var int = parseInt(length); 
 
         // check if desired length is in range, if not, prompt again
         while(int < 8 || int > 128)
@@ -84,6 +108,16 @@
         }
 
         return length;
+    }
+
+    function getLengthfromText() {
+      var lengthText = document.getElementById("passwordLength");
+
+      var int = parseInt(lengthText.value);
+      console.log("int " + int);
+
+      return int;
+
     }
 
     function generatePassword(length, UC, LC, NC, SC) {
