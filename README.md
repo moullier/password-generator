@@ -2,17 +2,19 @@
 
 ## Description
 
-This webpage is a password generator.  The page will generate a random password for the user, with the character types that the user selects (upper case letters, lower case letters, numeric, and special characters) included, of the length that they request (in a range from 8 to 128 characters).  The program does basic input checking, and also makes sure that each type of character selected is included in the generated password.
+This webpage is a password generator.  The page will generate a random password for the user, with the character types that the user selects (upper case letters, lower case letters, numeric, and special characters) included, of the length that they request (in a range from 8 to 128 characters).  To generate the password, the user must select which type of characters they want included, select the length of the password desired, and click the "Generate Password" button.  If they want to copy the password to their clipboard, they can click the "Copy to Clipboard" button.
 
-The logic of generating the password is executed in Javascript.  The page is styled with some basic Bootstrap to make it responsive.
+The logic of generating the password is executed in Javascript.  The page is styled with some basic Bootstrap to make it responsive.  The program does basic input checking, and also makes sure that each type of character selected is included in the generated password.
 
 ## Credits
 
-This resource provided the code to copy the generated password to the clipboard: https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
+This site provided the code to copy the generated password to the clipboard: https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
 
 This resource explained how to parse strings to integers: https://gomakethings.com/converting-strings-to-numbers-with-vanilla-javascript/
 
 This resource gave information about how to make a button call a function on a click: https://www.w3schools.com/jsref/event_onclick.asp
+
+W3Schools had a good example of how to create and style a Range Slider: https://www.w3schools.com/howto/howto_js_rangeslider.asp
 
 ## License
 
