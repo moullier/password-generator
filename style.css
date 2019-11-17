@@ -4,7 +4,7 @@
 
 .slider {
   -webkit-appearance: none;
-  width: 33%;
+  width: 40%;
   height: 20px;
   border-radius: 5px;  
   background: #d3d3d3;
@@ -36,13 +36,10 @@
   cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .slider {
       width: 70%;
-    }
-
-    .main {
-        margin-left: 20px;
+      margin-left: 15px;
     }
   }
 
