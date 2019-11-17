@@ -6,7 +6,7 @@
 .slider {
   -webkit-appearance: none;
   width: 33%;
-  height: 15px;
+  height: 20px;
   border-radius: 5px;  
   background: #d3d3d3;
   outline: none;
@@ -22,16 +22,16 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%; 
   background: #007bff;
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   background: #007bff;
   cursor: pointer;
 }
@@ -39,6 +39,5 @@
 @media only screen and (max-width: 600px) {
     .slider {
       width: 70%;
-      
     }
   }
