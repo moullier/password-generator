@@ -1,4 +1,3 @@
-
 // function activated when the "Generate Password" button is clicked
 function masterFunction() {
     //Get the status of the checkboxes
@@ -26,12 +25,6 @@ function masterFunction() {
     // alert("Include Numeric: " + NC)
     // alert("Include Special: " + SC)
     length = getLengthfromSlider();
-
-    //check if length is valid, if not return
-    if(!(length >= 8 && length <= 128)) {
-        alert("Desired length must be between 8 and 128 characters");
-        return;
-    }
 
 
     password = generatePassword(length, UC, LC, NC, SC);
@@ -65,7 +58,8 @@ function getLength() {
     return length;
 }
 
-// Deprecated function to get the length from a text field
+// Deprecated function to get the length from a text field.  If using this function,
+// would need to check that the value was in appropriate 8 to 128 range.
 function getLengthfromText() {
     var lengthText = document.getElementById("passwordLength");
 
@@ -76,6 +70,8 @@ function getLengthfromText() {
 
 }
 
+// Gets the length from the slider.  As the only allowed values are in the accepted 8 to 128
+// character range, no need to validate inputs.
 function getLengthfromSlider() {
     var length = slider.value;
     console.log("slider value = " + length);
@@ -146,21 +142,7 @@ function generateRandomNumber(max) {
     return rand;
 }
 
-// Copies the text in the password field to the clipboard
-function copyPasswordtoClipboard() {
-    /* Get the text field */
-    var copyText = document.getElementById("passwordField");
 
-    /* Select the text field */
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-
-    /* Copy the text inside the text field */
-    document.execCommand("copy");
-
-    /* Alert the copied text */
-    // alert("Copied the text: " + copyText.value);
-}
 
 // Check if each category of character that is requested (represented by boolean value true)
 // is included in the password.  Return true if all characters included, otherwise false
@@ -177,23 +159,32 @@ function checkCharactersExist(password, UC, LC, NC, SC) {
     r3 = true;
     r4 = true;
 
-    // If UC is true, there must be at least one uppercase character
+    // If UC is true, there must be at least one uppercase character in string to meet requirements
+    // If there is, set r1 to true, otherwise false
     if(UC) {
-    r1 = checkPasswordAgainstArray(password, upperletterarray);
+        r1 = checkPasswordAgainstArray(password, upperletterarray);
     }
 
+    // If LC is true, there must be at least one lowercase character in string to meet requirements
+    // If there is, set r2 to true, otherwise false
     if(LC) {
-    r2 = checkPasswordAgainstArray(password, lowerletterarray);
+        r2 = checkPasswordAgainstArray(password, lowerletterarray);
     }
 
+    // If NC is true, there must be at least one numeric character in string to meet requirements
+    // If there is, set r3 to true, otherwise false
     if(NC) {
-    r3 = checkPasswordAgainstArray(password, numericarray);
+        r3 = checkPasswordAgainstArray(password, numericarray);
     }
 
+    // If SC is true, there must be at least one special character in string to meet requirements
+    // If there is, set r4 to true, otherwise false
     if(SC) {
-    r4 = checkPasswordAgainstArray(password, unicodearray);
+        r4 = checkPasswordAgainstArray(password, unicodearray);
     }
 
+    // All the r variables will be true if either 1) the character type is not required in the password, or
+    // 2) it is required and it is included in the password.  Otherwise, it will be false, and so will result.
     result = (r1 && r2 && r3 && r4);
 
     console.log("result = " + result)
@@ -215,7 +206,24 @@ function checkPasswordAgainstArray(password, characterarray) {
 }
 
 
+// Copies the text in the password field to the clipboard
+function copyPasswordtoClipboard() {
+    /* Get the text field */
+    var copyText = document.getElementById("passwordField");
 
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+
+    /* Alert the copied text */
+    // alert("Copied the text: " + copyText.value);
+}
+
+
+// Code to display the value of the slider
 var slider = document.getElementById("myRange");
 var output = document.getElementById("sliderValue");
 output.innerHTML = slider.value;
